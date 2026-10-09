@@ -1,0 +1,29 @@
+This distribution is licensed under the PolyForm Noncommercial License 1.0.0 in LICENSE, with one exception described under "Third-party notice" below.
+
+Required Notice: Copyright (c) 2026 Veridex Alethia Labs Ltd
+
+Licensor and copyright holder of this repository: Veridex Alethia Labs Ltd.
+
+Third-party notice
+==================
+
+File: `contracts/vte-evidence-api/daml/VteHoldingInterfaceAPI.daml`
+
+This file is adapted from the Splice token standard:
+
+- Splice.Api.Token.HoldingV1 and Splice.Api.Token.MetadataV1
+- Source: the `token-standard` directory of the Splice repository, <https://github.com/canton-network/splice> (earlier address: <https://github.com/hyperledger-labs/splice>)
+- Upstream files and git blob ids:
+  - directory `token-standard/splice-api-token-holding-v1`, module `Splice.Api.Token.HoldingV1`, file blob `5bc6487c5c8bf447038597f7417762c064f1e6a1`
+  - directory `token-standard/splice-api-token-metadata-v1`, module `Splice.Api.Token.MetadataV1`, file blob `ec1b6f16ebeba7993a7523333b4fa801cf6549db`
+- Both upstream files are unchanged since commit `afcce7cff9d823bc06db51b9077b0f3c431fbda2` (2025-04-22).
+- Original copyright: Copyright (c) 2024 Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+- Original license: Apache License, Version 2.0 (SPDX: Apache-2.0)
+
+Changes: the two upstream modules are combined into one module with a different module name; some doc comments are shortened or removed; the definitions AnyValue, AnyContract, AnyContractView, AnyContractId, ChoiceContext, emptyChoiceContext, ExtraArgs and ChoiceExecutionMetadata are omitted. The remaining definitions keep their field names, types, order and derived instances.
+
+This one file is distributed under the Apache License, Version 2.0. The full text is in `LICENSES/Apache-2.0.txt` and is also available at <https://www.apache.org/licenses/LICENSE-2.0>. Modifications to this file are Copyright (c) 2026 Veridex Alethia Labs Ltd and are offered under the same license.
+
+All other files in this repository are licensed under the PolyForm Noncommercial License 1.0.0, with Veridex Alethia Labs Ltd as licensor.
+
+No other license or attribution is implied by this notice.

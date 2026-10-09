@@ -1,0 +1,14 @@
+SHA-256 of every file in this repository except this one.
+Format: <sha256>  <path relative to the repository root>
+
+5d228667dbd6c1626653aeb428195bdc56b5b9590fe9c4256bc26f12d86d8505  .gitignore
+c0ea4a896d2c8c394b29f9427589996db826cd501c512279ff0ed3ef48fabbe5  LICENSE
+cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30  LICENSES/Apache-2.0.txt
+ef742785d0c4fa39a2eceeffa6338cbe43be763a3700af4b0741b53ecd2d0c59  NOTICE
+1d0f783858c9a411d381b878ae9111f51e60ce716cc1d69653502d45a59fa025  README.md
+55793280745fa483f641d2b39b5f3ae6a4a71e5812abf7d382df464d028b075e  contracts/vte-evidence-api/daml.yaml
+8f6185df98a295987e69c3039052c9b7fc85414718fa9f168c8e754cd9693721  contracts/vte-evidence-api/daml/IVteRelianceReceipt.daml
+2ba4b5695591f6dfec4a2da0c4a3df4e538e011d256a137faa56ce732f1f2351  contracts/vte-evidence-api/daml/VteHoldingInterfaceAPI.daml
+6898e9667203331531bcf1d7782eb84e21b9970bb414d896b75f191d45e8a656  docs/architecture.md
+0f56441fa948a54dc3743e51f3b10ad8966d835f7a33f95b29f988e81e44dc73  docs/proven-and-not-proven.md
+7502b274e28f993838026b52ba4bbff25fed095ce19f94f67725611763cd7240  evidence/README.md

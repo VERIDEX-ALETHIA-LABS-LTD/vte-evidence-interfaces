@@ -1,0 +1,82 @@
+-- Copyright (c) 2024 Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
+-- Copyright (c) 2026 Veridex Alethia Labs Ltd (modifications)
+-- SPDX-License-Identifier: Apache-2.0
+--
+-- Adapted from the Splice token standard, Apache License 2.0:
+--   Splice.Api.Token.HoldingV1 and Splice.Api.Token.MetadataV1
+--   https://github.com/canton-network/splice (earlier address: hyperledger-labs/splice)
+--   token-standard/splice-api-token-holding-v1, module Splice.Api.Token.HoldingV1,
+--     git blob 5bc6487c5c8bf447038597f7417762c064f1e6a1
+--   token-standard/splice-api-token-metadata-v1, module Splice.Api.Token.MetadataV1,
+--     git blob ec1b6f16ebeba7993a7523333b4fa801cf6549db
+--   Both upstream files are unchanged since commit
+--   afcce7cff9d823bc06db51b9077b0f3c431fbda2 (2025-04-22).
+-- Changes: the definitions are combined in one module with a different module
+-- name, and some doc comments are shortened. Field names, types, order and
+-- derived instances are unchanged.
+-- Omitted from the upstream files: AnyValue, AnyContract, AnyContractView,
+-- AnyContractId, ChoiceContext, emptyChoiceContext, ExtraArgs and
+-- ChoiceExecutionMetadata.
+--
+-- Interface-only package: an interface definition cannot be upgraded, so it
+-- lives apart from any package that contains templates. The data types that
+-- HoldingView refers to are included here so that Lock is a single type.
+--
+--
+
+module VteHoldingInterfaceAPI where
+
+import DA.TextMap as TextMap
+import DA.Time (RelTime)
+
+-- Splice.Api.Token.HoldingV1.InstrumentId.
+data InstrumentId = InstrumentId
+  with
+    admin : Party
+      -- ^ The party that administers the instrument.
+    id : Text
+      -- ^ The identifier used for the instrument by the instrument admin.
+  deriving (Eq, Ord, Show)
+
+-- Splice.Api.Token.HoldingV1.Lock.
+data Lock = Lock
+  with
+    holders : [Party]
+      -- ^ Unique list of parties which are locking the contract.
+    expiresAt : Optional Time
+      -- ^ Absolute, inclusive deadline as of which the lock expires.
+    expiresAfter : Optional RelTime
+      -- ^ Duration after which the created lock expires, relative to the
+      -- ledger time at which the locked holding contract was created.
+    context : Optional Text
+      -- ^ Short, human-readable description of the context of the lock.
+  deriving (Eq, Ord, Show)
+
+-- Splice.Api.Token.MetadataV1.Metadata.
+data Metadata = Metadata
+  with
+    values : TextMap Text
+      -- ^ Key-value pairs of metadata entries.
+  deriving (Eq, Ord, Show)
+
+-- Empty metadata.
+emptyMetadata : Metadata
+emptyMetadata = Metadata with values = mempty
+
+-- Splice.Api.Token.HoldingV1.Holding and HoldingView.
+interface Holding where viewtype HoldingView
+
+-- | View for `Holding`.
+data HoldingView = HoldingView
+  with
+    owner : Party
+      -- ^ Owner of the holding.
+    instrumentId : InstrumentId
+      -- ^ Instrument being held.
+    amount : Decimal
+      -- ^ Size of the holding.
+    lock : Optional Lock
+      -- ^ Lock on the holding.
+    meta : Metadata
+      -- ^ Metadata.
+  deriving (Eq, Show)

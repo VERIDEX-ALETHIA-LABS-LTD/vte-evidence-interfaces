@@ -1,0 +1,74 @@
+-- Copyright (c) 2026 Veridex Alethia Labs Ltd
+-- SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+--
+-- Reliance receipt interface. This package contains only an interface, with
+-- no templates, so that a relying party can import this small package
+-- without depending on any implementation package. Interface definitions
+-- cannot be changed once deployed, so they live in a standalone package.
+--
+-- A relying party imports only this package and can fetch the receipt and
+-- exercise the freshness choice below. The view carries the parties, the
+-- composed modes, the epoch and the validity window. It carries no amounts
+-- or attestation details.
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+
+module IVteRelianceReceipt where
+
+import DA.Time (isLedgerTimeLE)
+
+-- Minimal view: the fields a relying party needs to decide whether the
+-- receipt is still usable. The view has no field for amounts or detailed
+-- attestations.
+--
+data VteRelianceReceiptView = VteRelianceReceiptView
+  with
+    subject : Party
+    relyingParty : Party
+    bookCommitmentRoot : Text
+      -- ^ Hex-encoded bytes held as Text, so this package depends only on
+      -- daml-prim and daml-stdlib.
+    composedModes : [Text]
+    strictValueComposition : Bool
+    epoch : Int
+    revalidatedAt : Time
+    validUntil : Time
+  deriving (Eq, Show)
+
+interface IVteRelianceReceipt where
+  viewtype VteRelianceReceiptView
+
+  -- Choice defined on the interface itself, so a contract that imports only
+  -- this package can exercise it through the interface contract id:
+  -- exercise (toInterfaceContractId @IVteRelianceReceipt receiptCid)
+  --   AssertRelianceReceiptFresh with consumer = myParty
+  -- inside its own transaction.
+  --
+  --
+  --
+  nonconsuming choice AssertRelianceReceiptFresh : ()
+    with
+      consumer : Party
+    controller consumer
+    do
+      let v = view this
+      assertMsg
+        "VteNotRelyingParty: solo el relyingParty declarado en el recibo puede consultar su frescura"
+        (consumer == v.relyingParty)
+      fresh <- isLedgerTimeLE v.validUntil
+      assertMsg
+        "VteRelianceReceiptExpired: el recibo de revalidacion vencio -- pedir uno nuevo, no confiar en este"
+        fresh

@@ -1,0 +1,11 @@
+sdk-version: 3.4.11
+name: vte-evidence-api
+source: daml
+version: 1.0.0
+# Interface-only package (no templates): what a counterparty imports to consume
+# the reliance receipt without depending on the full VTE package. Canton
+# requires interface definitions to live in a standalone package that contains
+# only interfaces.
+dependencies:
+  - daml-prim
+  - daml-stdlib
